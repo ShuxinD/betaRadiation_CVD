@@ -13,12 +13,12 @@ gc()
 setwd("/media/qnap3/Shuxin/ParticalRadiation_MAdeath/")
 
 library(data.table)
-
 ## except for census data,data are all from Joel's server
 
 ## 1.1 annual death on ZCTA ---------------------------------------------------
+## 1.1.1 all age ---------
 dir_death_count <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/"
-count_month <- readRDS(paste0(dir_death_count, "MAdeath_count_ZIP.rds")) # this is by year and month
+count_month <- readRDS(paste0(dir_death_count, "MAdeath_count_ZIP_ageall.rds")) # this is by year and month
 count_year <- count_month[, .(CVD = sum(CVD),
                               MI = sum(MI),
                               CHF = sum(CHF),
@@ -29,6 +29,51 @@ summary(count_year[,year])
 # 2000    2003    2008    2008    2012    2015 
 sum(count_year[,TOT])
 # [1] 738913
+
+## 1.1.2. age 0-65 ----
+dir_death_count <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/"
+count_month065 <- readRDS(paste0(dir_death_count, "MAdeath_count_ZIP_age065.rds")) # this is by year and month
+count_year065 <- count_month065[, .(CVD = sum(CVD),
+                              MI = sum(MI),
+                              CHF = sum(CHF),
+                              stroke = sum(stroke),
+                              TOT = sum(TOT)), by = .(year, ZCTA5CE10)] # aggregate on year
+summary(count_year065[,year])
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 2000    2003    2008    2008    2012    2015 
+sum(count_year065[,TOT])
+names(count_year065)[3:7] <- paste0(names(count_year065)[3:7], "065")
+
+## 1.1.3. age 65-85 ----
+dir_death_count <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/"
+count_month6585 <- readRDS(paste0(dir_death_count, "MAdeath_count_ZIP_age6585.rds")) # this is by year and month
+count_year6585 <- count_month6585[, .(CVD = sum(CVD),
+                                    MI = sum(MI),
+                                    CHF = sum(CHF),
+                                    stroke = sum(stroke),
+                                    TOT = sum(TOT)), by = .(year, ZCTA5CE10)] # aggregate on year
+summary(count_year6585[,year])
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 2000    2003    2008    2008    2012    2015 
+sum(count_year6585[,TOT])
+# [1] 738913
+names(count_year6585)[3:7] <- paste0(names(count_year6585)[3:7], "6585")
+
+## 1.1.4. age 0-65 ----
+dir_death_count <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/"
+count_month85 <- readRDS(paste0(dir_death_count, "MAdeath_count_ZIP_age85.rds")) # this is by year and month
+count_year85 <- count_month85[, .(CVD = sum(CVD),
+                                    MI = sum(MI),
+                                    CHF = sum(CHF),
+                                    stroke = sum(stroke),
+                                    TOT = sum(TOT)), by = .(year, ZCTA5CE10)] # aggregate on year
+summary(count_year85[,year])
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 2000    2003    2008    2008    2012    2015 
+sum(count_year85[,TOT])
+# [1] 738913
+names(count_year85)[3:7] <- paste0(names(count_year85)[3:7], "85")
+
 ## 1.2 annual beta radiation on ZCTA ------------------------------------------
 load("MA_ZIP_Annual_Beta_V3.RData") # radiation data from Longxiang
 setDT(ma_annual)
@@ -38,6 +83,7 @@ gc()
 summary(betaR[,Year])
 # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 # 2001    2005    2009    2009    2013    2017 
+names(count_year065)[3:7] <- paste0(names(count_year065)[3:7], "065")
 
 ## ** all following data should be 2001-2015 ---------------------------------
 ## 2.1 seasonal temperature on ZCTA ------------------------------------------
@@ -104,4 +150,15 @@ sum(final[,TOT])
 # [1] 725269
 dim(final)
 # [1] 6985   21
+#saveRDS(final, "finalDT.rds")
+
+#final_allage <- readRDS("finalDT.rds")
+names(final)
+final <- merge(final, count_year065, by = c("year", "ZCTA5CE10"), all.x = T)
+final <- merge(final, count_year6585, by = c("year", "ZCTA5CE10"), all.x = T)
+final <- merge(final, count_year85, by = c("year", "ZCTA5CE10"), all.x = T)
+final
+final <- final[,lapply(.SD,function(x){ifelse(is.na(x),0,x)})] # convert NA to 0
+anyNA(final)
+final
 saveRDS(final, "finalDT.rds")
