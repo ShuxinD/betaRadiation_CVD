@@ -45,7 +45,7 @@ summary(count_year1865[,year])
 # Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 # 2001    2004    2008    2008    2012    2015 
 sum(count_year1865[,TOT])
-names(count_year1865)[3:7] <- paste0(names(count_year1865)[3:7], "065")
+names(count_year1865)[3:7] <- paste0(names(count_year1865)[3:7], "1865")
 
 ## 1.1.3. age 65-85 ----
 dir_death_count <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/"
