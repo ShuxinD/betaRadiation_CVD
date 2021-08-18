@@ -1,12 +1,12 @@
-###############################################################################
+############################################################################
 # Project: beta radiation and CVD death in MA
 # Code: Output descriptive stats
 # Input: "finalDT.rds"
 # Output: "table1.doc" "corrTable.pdf"
-# Author: Shuxin Dong                                                         
-###############################################################################
+# Author: Shuxin Dong                                                       
+############################################################################
 
-## 0. set up ------------------------------------------------------------------
+## 0. set up ---------------------------------------------------------------
 rm(list = ls())
 gc()
 
@@ -21,9 +21,12 @@ library(corrplot)
 
 dt <- readRDS("finalDT.rds")
 
-## 1. table one  ------------------------------------------------------------------
+## 1. table one  -----------------------------------------------------------
 summary(dt)
-listVars <- c("CVD", "MI", "stroke", "TOT", "Beta", "pm25", "summer_tmean", "winter_tmean", "medhouseholdincome", "medianhousevalue","hispanic", "pct_blk", "poverty", "education", "popdensity", "mean_bmi", "smoke_rate", "pcount")
+listVars <- c("CVD", "MI", "stroke", "TOT",
+              "CVD1865", "MI1865", "stroke1865", "TOT1865",
+              "CVD6585", "MI6585", "stroke6585", "TOT6585",
+              "Beta", "pm25", "summer_tmean", "winter_tmean", "medhouseholdincome", "medianhousevalue","hispanic", "pct_blk", "poverty", "education", "popdensity", "mean_bmi", "smoke_rate", "pcount")
 rawtable1 <- CreateTableOne(vars = listVars, data = dt)
 table1 <- print(rawtable1, 
                 formatOption = list(decimal.mark = ".",  big.mark = ",", scientific = FALSE),
@@ -33,7 +36,7 @@ addParagraph(rtffile, "Table")
 addTable(rtffile, cbind(rownames(table1), table1))
 done(rtffile)
 
-## 2. correlation table -------------------------------------------------------
+## 2. correlation table ----------------------------------------------------
 M <- cor(na.omit(dt)[,.(Beta, pm25, summer_tmean, winter_tmean, medhouseholdincome, medianhousevalue, hispanic, pct_blk, poverty, education, popdensity, mean_bmi, smoke_rate)])
 cor.mtest <- function(mat, ...) {
   mat <- as.matrix(mat)
@@ -52,6 +55,7 @@ cor.mtest <- function(mat, ...) {
 p.mat <- cor.mtest(na.omit(dt)[,.(Beta, pm25, summer_tmean, winter_tmean, medhouseholdincome, medianhousevalue, hispanic, pct_blk, poverty, education, popdensity, mean_bmi, smoke_rate)])
 colnames(M) <- c("Particle radiation", "PM[2.5]", "Summer average temperature", "Winter average temperature", "Median household income", "Median value of house", "Percentage of Hispanic", "Percentage of black", "Pencentage below poverty line", "Percentage without high school diploma", "Population density", "Mean BMI", "Smoking rate")
 rownames(M) <- c("Particle radiation", "PM[2.5]", "Summer average temperature", "Winter average temperature", "Median household income", "Median value of house", "Percentage of Hispanic", "Percentage of black", "Pencentage below poverty line", "Percentage without high school diploma", "Population density", "Mean BMI", "Smoking rate")
+par(mfrow=c(1,1))
 corrplot(M, method="number", type = "lower", p.mat = p.mat, sig.level = 0.01)
 
 pdf(paste0(dir_results,"corrTable.pdf"), width = 10, height = 10)

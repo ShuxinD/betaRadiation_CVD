@@ -26,27 +26,67 @@ Table\par}
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 n\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20       6,985\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       7,054\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 CVD (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20      26.973 (27.840)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20      26.421 (27.512)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 MI (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20       5.292 (6.317)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       5.202 (6.255)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 stroke (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20       5.647 (6.356)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       5.539 (6.281)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 TOT (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20     103.832 (102.405)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20     101.595 (101.182)\cell
+\widctlpar\intbl\row
+\trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
+\clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
+\pard\ql\widctlpar\intbl\fi0\f2\fs20 CVD1865 (mean (SD))\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       3.861 (4.652)\cell
+\widctlpar\intbl\row
+\trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
+\clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
+\pard\ql\widctlpar\intbl\fi0\f2\fs20 MI1865 (mean (SD))\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       0.845 (1.343)\cell
+\widctlpar\intbl\row
+\trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
+\clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
+\pard\ql\widctlpar\intbl\fi0\f2\fs20 stroke1865 (mean (SD))\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       0.482 (0.894)\cell
+\widctlpar\intbl\row
+\trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
+\clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
+\pard\ql\widctlpar\intbl\fi0\f2\fs20 TOT1865 (mean (SD))\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20      18.294 (19.618)\cell
+\widctlpar\intbl\row
+\trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
+\clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
+\pard\ql\widctlpar\intbl\fi0\f2\fs20 CVD6585 (mean (SD))\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20      10.703 (11.660)\cell
+\widctlpar\intbl\row
+\trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
+\clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
+\pard\ql\widctlpar\intbl\fi0\f2\fs20 MI6585 (mean (SD))\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       2.411 (3.190)\cell
+\widctlpar\intbl\row
+\trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
+\clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
+\pard\ql\widctlpar\intbl\fi0\f2\fs20 stroke6585 (mean (SD))\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       2.324 (2.942)\cell
+\widctlpar\intbl\row
+\trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
+\clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
+\pard\ql\widctlpar\intbl\fi0\f2\fs20 TOT6585 (mean (SD))\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20      45.042 (45.229)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
@@ -56,32 +96,32 @@ Table\par}
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 pm25 (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20       8.308 (1.902)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       8.295 (1.903)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 summer_tmean (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20      20.786 (0.970)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20      20.776 (0.979)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 winter_tmean (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20      -1.878 (2.065)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20      -1.888 (2.075)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 medhouseholdincome (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20  69,738.579 (26,656.413)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20  69,621.307 (26,637.085)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 medianhousevalue (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20 309,872.857 (154,568.320)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20 309,805.003 (154,741.460)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 hispanic (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20       0.058 (0.105)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       0.058 (0.104)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
@@ -91,32 +131,32 @@ Table\par}
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 poverty (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20       0.082 (0.068)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       0.081 (0.068)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 education (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20       0.206 (0.137)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       0.206 (0.138)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 popdensity (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20   2,840.996 (5,126.893)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20   2,816.645 (5,108.246)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 mean_bmi (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20      26.827 (0.646)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20      26.824 (0.646)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 smoke_rate (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20       0.495 (0.041)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20       0.495 (0.042)\cell
 \widctlpar\intbl\row
 \trowd\trgaph100\trleft0\clvertalt\clshdrawnil\clwWidth4584\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\clbrdrb\brdrs\brdrw15\cellx1
 \clvertalt\clshdrawnil\clwWidth3868\clftsWidth3\clheight260\clpadl100\clpadr100\gaph\clbrdrb\brdrs\brdrw15\cellx2
 \pard\ql\widctlpar\intbl\fi0\f2\fs20 pcount (mean (SD))\cell
-\pard\ql\widctlpar\intbl\fi0\f2\fs20  13,824.167 (12,265.513)\cell
+\pard\ql\widctlpar\intbl\fi0\f2\fs20  13,694.464 (12,275.107)\cell
 \widctlpar\intbl\row
 }
 
