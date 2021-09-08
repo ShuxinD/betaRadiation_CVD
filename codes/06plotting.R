@@ -1,0 +1,130 @@
+###############################################################################
+# Project: beta radiation and CVD death in MA
+# Code: plot results
+# Input: "RRiqr_beta_beta.csv"
+# Input: "RRiqr_beta_betaPM.csv"
+# Input: "RRiqr_pm25_betaPM.csv"
+# Output: "RRiqr_beta_age.pdf"
+# Output:
+# Author: Shuxin Dong                                                         
+###############################################################################
+
+## 0. set up ------------------------------------------------------------------
+rm(list = ls())
+gc()
+
+setwd("/media/qnap3/Shuxin/ParticalRadiation_MAdeath/")
+library(ggplot2)
+
+## 1. prepare dataset for plotting --------------------------------------------
+dir_results.table <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
+
+## 1.1 beta radiation -------
+results_A <- read.table(file = paste0(dir_results.table, "RRiqr_beta_betaPM.csv"))
+results_B <- read.table(file = paste0(dir_results.table, "RRiqr_beta_beta.csv"))
+
+RR_A <- c(results_A[,1], results_A[,4])
+lowCI_A <- c(results_A[,2], results_A[,5])
+highCI_A <- c(results_A[,3], results_A[,6])
+
+RR_B <- c(results_B[,1], results_B[,4])
+lowCI_B <- c(results_B[,2], results_B[,5])
+highCI_B <- c(results_B[,3], results_B[,6])
+
+n_model <- length(RR_A)/2
+results_beta_all <- rbind(cbind(RR_A, lowCI_A, highCI_A), cbind(RR_B, lowCI_B, highCI_B))
+print(results_beta_all)
+results_beta_all <- data.frame(results_beta_all)
+View(results_beta_all)
+dim(results_beta_all)
+
+results_beta_all$mod <- rep(c(rep("Differences in differences", n_model), rep("Mixed-effect", n_model)),2)
+results_beta_all$cause <- rep(c("TOT", "CVD", "MI", "stroke"), dim(results_beta_all)[1]/4)
+results_beta_all$exposures <-  c(rep("beta radiation + PM[2.5]", n_model*2), rep("only beta radiation", n_model*2))
+results_beta_all$age_group <- rep(c(rep("18+", 4), rep("18-65", 4),rep("65-85", 4),rep("85+", 4)),2)
+colnames(results_beta_all) <- c("RR", "lowCI", "highCI", "mod", "cause", "exposures", "age_group")
+View(results_beta_all)
+
+write.csv(results_beta_all, paste0(dir_results.table, "results_beta_all_plot.csv"))
+
+## 1.2 PM2.5 -------
+results_A <- read.table(file = paste0(dir_results.table, "RRiqr_pm25_betaPM.csv"))
+
+RR_A <- c(results_A[,1], results_A[,4])
+lowCI_A <- c(results_A[,2], results_A[,5])
+highCI_A <- c(results_A[,3], results_A[,6])
+
+n_model <- length(RR_A)/2
+results_PM_all <- cbind(RR_A, lowCI_A, highCI_A)
+print(results_PM_all)
+results_PM_all <- data.frame(results_PM_all)
+View(results_PM_all)
+dim(results_PM_all)
+
+results_PM_all$mod <- c(rep("Differences in differences", n_model), rep("Mixed-effect", n_model))
+results_PM_all$cause <- rep(c("TOT", "CVD", "MI", "stroke"), dim(results_PM_all)[1]/4)
+results_PM_all$exposures <- rep("beta radiation + PM[2.5]", n_model*2)
+results_PM_all$age_group <- c(rep("18+", 4), rep("18-65", 4),rep("65-85", 4),rep("85+", 4))
+colnames(results_PM_all) <- c("RR", "lowCI", "highCI", "mod", "cause", "exposures", "age_group")
+View(results_PM_all)
+
+write.csv(results_PM_all, paste0(dir_results.table, "results_PM_all_plot.csv"))
+
+## 2. plot beta radiation -----------------------------------------------------
+dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
+plotDT <- results_beta_all
+setDT(plotDT)
+plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
+plotbeta <- ggplot(plotDT, aes(x = cause, y = RR)) +
+  geom_pointrange(size=0.3, aes(ymin = lowCI, ymax = highCI, shape = age_group, linetype = exposures, color = mod), position = position_dodge(0.8)) +
+  geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
+  xlab("Rate ratio for an IQR increase with 95% confidence interval") + ylab("Death cause") +
+  labs(color = "Models") +
+  labs(linetype = "Exposure sets") +
+  labs(shape = "Age groups") +
+  guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), linetype=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
+  scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "TOT" = "All-causes")) +
+  theme_minimal()
+plotbeta
+
+pdf(paste0(dir_plot, "RRiqr_beta_age.pdf"), height = 3.5)
+plotbeta
+dev.off()
+
+# setDT(results_beta_all)
+# plotDT <- results_beta_all[mod == "Differences in differences", ]
+# plotDT
+# plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
+# DIDbeta <- ggplot(plotDT, aes(x = cause, y = RR)) +
+#   geom_linerange(aes(ymin = lowCI, ymax = highCI, shape = age_group, linetype = exposures), position = position_dodge(0.5), width = 0.5) +
+#   geom_point(size=2, aes(shape = age_group, linetype = exposures), position = position_dodge(0.5)) +
+#   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
+#   xlab("Death Cause") + ylab("Rate Ratio for an IQR increase \n with 95% Confidence Interval") +
+#   theme(legend.position="right") +
+#   labs(color = "Age groups") +
+#   labs(linetype = "Exposure sets") +
+#   guides(color=guide_legend(nrow=2, byrow=TRUE), linetype=guide_legend(nrow=2, byrow=TRUE), shape=guide_legend(nrow=2, byrow=TRUE)) +
+#   theme_minimal() +
+#   coord_flip()
+# DIDbeta
+
+# 3. plot PM2.5 --------------
+dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
+plotDT <- results_PM_all
+setDT(plotDT)
+plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
+plotbeta <- ggplot(plotDT, aes(x = cause, y = RR)) +
+  geom_pointrange(size=0.3, aes(ymin = lowCI, ymax = highCI, shape = age_group, color = mod), position = position_dodge(0.8)) +
+  geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
+  xlab("Rate ratio for an IQR increase with 95% confidence interval") + ylab("Death cause") +
+  labs(color = "Models") +
+  labs(shape = "Age groups") +
+  guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
+  scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "TOT" = "All-causes")) +
+  theme_minimal()
+
+plotbeta
+
+pdf(paste0(dir_plot, "RRiqr_PM_age.pdf"), height = 3.5)
+plotbeta
+dev.off()
