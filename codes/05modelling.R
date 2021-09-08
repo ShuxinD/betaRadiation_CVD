@@ -73,6 +73,10 @@ for (deathc_i in deathc) {
 
 ## 2. Results tables ----------------------------------------------------------
 dir_results.table <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
+deathc <- c("TOT", "CVD", "MI", "stroke", 
+            paste0(c("TOT", "CVD", "MI", "stroke"), 1865), 
+            paste0(c("TOT", "CVD", "MI", "stroke"), 6585), 
+            paste0(c("TOT", "CVD", "MI", "stroke"), 85))
 ## IQR ----
 IQRs <- setDT(data.frame(beta = IQR(dt[,Beta]),
                          pm25 = IQR(dt[,pm25])))
@@ -87,7 +91,7 @@ rownames_list <- NULL
 
 for (deathc_i in deathc) {
   tb <- read.table(paste0(dir_modresults, "mod0A_", deathc_i, ".csv"))
-  estimates <- exp(c(tb[2,1], tb[2,1]-1.96*tb[2,2], tb[2,1]-1.96*tb[2,2])*IQRs[,beta])
+  estimates <- exp(c(tb[2,1], tb[2,1]-1.96*tb[2,2], tb[2,1]+1.96*tb[2,2])*IQRs[,beta])
   RR0A_tb <- rbind(RR0A_tb, estimates)
   rownames_list <- c(rownames_list, paste0(deathc_i, "age"))
 }
@@ -100,7 +104,7 @@ RR1A_tb <- NULL
 rownames_list <- NULL
 for (deathc_i in deathc) {
   tb <- read.table(paste0(dir_modresults, "mod1A_", deathc_i, ".csv"))
-  estimates <- exp(c(tb[2,1], tb[2,1]-1.96*tb[2,2], tb[2,1]-1.96*tb[2,2])*IQRs[,beta])
+  estimates <- exp(c(tb[2,1], tb[2,1]-1.96*tb[2,2], tb[2,1]+1.96*tb[2,2])*IQRs[,beta])
   RR1A_tb <- rbind(RR1A_tb, estimates)
   rownames_list <- c(rownames_list, paste0(deathc_i, "age"))
 }
@@ -121,7 +125,7 @@ rownames_list <- NULL
 
 for (deathc_i in deathc) {
   tb <- read.table(paste0(dir_modresults, "mod0A_", deathc_i, ".csv"))
-  estimates <- exp(c(tb[3,1], tb[3,1]-1.96*tb[3,2], tb[3,1]-1.96*tb[3,2])*IQRs[,pm25])
+  estimates <- exp(c(tb[3,1], tb[3,1]-1.96*tb[3,2], tb[3,1]+1.96*tb[3,2])*IQRs[,pm25])
   RR0A_tb <- rbind(RR0A_tb, estimates)
   rownames_list <- c(rownames_list, paste0(deathc_i, "age"))
 }
@@ -135,7 +139,7 @@ RR1A_tb <- NULL
 rownames_list <- NULL
 for (deathc_i in deathc) {
   tb <- read.table(paste0(dir_modresults, "mod1A_", deathc_i, ".csv"))
-  estimates <- exp(c(tb[3,1], tb[3,1]-1.96*tb[3,2], tb[3,1]-1.96*tb[3,2])*IQRs[,beta])
+  estimates <- exp(c(tb[3,1], tb[3,1]-1.96*tb[3,2], tb[3,1]+1.96*tb[3,2])*IQRs[,pm25])
   RR1A_tb <- rbind(RR1A_tb, estimates)
   rownames_list <- c(rownames_list, paste0(deathc_i, "age"))
 }
@@ -154,7 +158,7 @@ RR0B_tb <- NULL
 rownames_list <- NULL
 for (deathc_i in deathc) {
   tb <- read.table(paste0(dir_modresults, "mod0B_", deathc_i, ".csv"))
-  estimates <- exp(c(tb[2,1], tb[2,1]-1.96*tb[2,2], tb[2,1]-1.96*tb[2,2])*IQRs[,beta])
+  estimates <- exp(c(tb[2,1], tb[2,1]-1.96*tb[2,2], tb[2,1]+1.96*tb[2,2])*IQRs[,beta])
   RR0B_tb <- rbind(RR0B_tb, estimates)
   rownames_list <- c(rownames_list, paste0(deathc_i, "age"))
 }
@@ -167,7 +171,7 @@ RR1B_tb <- NULL
 rownames_list <- NULL
 for (deathc_i in deathc) {
   tb <- read.table(paste0(dir_modresults, "mod1B_", deathc_i, ".csv"))
-  estimates <- exp(c(tb[2,1], tb[2,1]-1.96*tb[2,2], tb[2,1]-1.96*tb[2,2])*IQRs[,beta])
+  estimates <- exp(c(tb[2,1], tb[2,1]-1.96*tb[2,2], tb[2,1]+1.96*tb[2,2])*IQRs[,beta])
   RR1B_tb <- rbind(RR1B_tb, estimates)
   rownames_list <- c(rownames_list, paste0(deathc_i, "age"))
 }
