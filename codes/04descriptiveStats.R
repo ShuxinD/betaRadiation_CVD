@@ -26,6 +26,7 @@ summary(dt)
 listVars <- c("CVD", "MI", "stroke", "TOT",
               "CVD1865", "MI1865", "stroke1865", "TOT1865",
               "CVD6585", "MI6585", "stroke6585", "TOT6585",
+              "CVD85", "MI85", "stroke85", "TOT85",
               "Beta", "pm25", "summer_tmean", "winter_tmean", "medhouseholdincome", "medianhousevalue","hispanic", "pct_blk", "poverty", "education", "popdensity", "mean_bmi", "smoke_rate", "pcount")
 rawtable1 <- CreateTableOne(vars = listVars, data = dt)
 table1 <- print(rawtable1, 
@@ -35,6 +36,13 @@ rtffile <- RTF(file = paste0(dir_results, "table1.doc"))  # this can be an .rtf 
 addParagraph(rtffile, "Table")
 addTable(rtffile, cbind(rownames(table1), table1))
 done(rtffile)
+
+dt[,`:=`(CHF=NULL,CHF1865=NULL,CHF6585=NULL,CHF85=NULL,
+         ZCTA5CE10=NULL,year=NULL)]
+summary <- rbind(dt[, lapply(.SD, mean)], dt[, lapply(.SD, sd)],
+      dt[, lapply(.SD, quantile)])
+rownames(summary) <- c("mean", "sd", "quantile0", "quantile25", "quantile50","quantile75", "quantile1")
+write.csv(summary, paste0(dir_results, "tableone_value.csv"))
 
 ## 2. correlation table ----------------------------------------------------
 M <- cor(na.omit(dt)[,.(Beta, pm25, summer_tmean, winter_tmean, medhouseholdincome, medianhousevalue, hispanic, pct_blk, poverty, education, popdensity, mean_bmi, smoke_rate)])
