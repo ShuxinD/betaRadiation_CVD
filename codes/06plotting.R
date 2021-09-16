@@ -78,7 +78,7 @@ plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+")
 plotbeta <- ggplot(plotDT, aes(x = cause, y = RR)) +
   geom_pointrange(size=0.3, aes(ymin = lowCI, ymax = highCI, shape = age_group, linetype = exposures, color = mod), position = position_dodge(0.8)) +
   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
-  xlab("Rate ratio for an IQR increase with 95% confidence interval") + ylab("Death cause") +
+  ylab("Rate ratio for an IQR increase\nwith 95% confidence interval") + xlab("Death cause") +
   labs(color = "Models") +
   labs(linetype = "Exposure sets") +
   labs(shape = "Age groups") +
@@ -113,18 +113,17 @@ dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/res
 plotDT <- results_PM_all
 setDT(plotDT)
 plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
-plotbeta <- ggplot(plotDT, aes(x = cause, y = RR)) +
+plotpm <- ggplot(plotDT, aes(x = cause, y = RR)) +
   geom_pointrange(size=0.3, aes(ymin = lowCI, ymax = highCI, shape = age_group, color = mod), position = position_dodge(0.8)) +
   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
-  xlab("Rate ratio for an IQR increase with 95% confidence interval") + ylab("Death cause") +
+  ylab("Rate ratio for an IQR increase\nwith 95% confidence interval") + xlab("Death cause") +
   labs(color = "Models") +
   labs(shape = "Age groups") +
   guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
   scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "TOT" = "All-causes")) +
   theme_minimal()
-
-plotbeta
+plotpm
 
 pdf(paste0(dir_plot, "RRiqr_PM_age.pdf"), height = 3.5)
-plotbeta
+plotpm
 dev.off()

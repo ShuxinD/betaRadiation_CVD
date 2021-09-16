@@ -39,6 +39,7 @@ done(rtffile)
 
 dt[,`:=`(CHF=NULL,CHF1865=NULL,CHF6585=NULL,CHF85=NULL,
          ZCTA5CE10=NULL,year=NULL)]
+dt[,`:=`(CVDrate=CVD/pcount,MIrate=MI/pcount,strokerate=stroke/pcount,TOTrate=TOT/pcount)][]
 summary <- rbind(dt[, lapply(.SD, mean)], dt[, lapply(.SD, sd)],
       dt[, lapply(.SD, quantile)])
 rownames(summary) <- c("mean", "sd", "quantile0", "quantile25", "quantile50","quantile75", "quantile1")
