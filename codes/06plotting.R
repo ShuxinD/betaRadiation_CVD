@@ -1,13 +1,10 @@
-###############################################################################
-# Project: beta radiation and CVD death in MA
-# Code: plot results
-# Input: "RRiqr_beta_beta.csv"
-# Input: "RRiqr_beta_betaPM.csv"
-# Input: "RRiqr_pm25_betaPM.csv"
-# Output: "RRiqr_beta_age.pdf"
-# Output:
-# Author: Shuxin Dong                                                         
-###############################################################################
+#' Project: beta radiation and CVD death in MA
+#' Code: plot results
+#' Input: "RRiqr_beta_beta.csv"
+#' Input: "RRiqr_beta_betaPM.csv"
+#' Input: "RRiqr_pm25_betaPM.csv"
+#' Output: ...
+#' Author: Shuxin Dong                                                         
 
 ## 0. set up ------------------------------------------------------------------
 rm(list = ls())
@@ -16,7 +13,7 @@ gc()
 setwd("/media/qnap3/Shuxin/ParticalRadiation_MAdeath/")
 library(ggplot2)
 
-## 1. prepare dataset for plotting --------------------------------------------
+## 1. prepare the dataset for plotting -----
 dir_results.table <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
 
 ## 1.1 beta radiation -------
@@ -72,6 +69,7 @@ write.csv(results_PM_all, paste0(dir_results.table, "results_PM_all_plot.csv"))
 
 ## 2. plot beta radiation -----------------------------------------------------
 dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
+## 2.1 beta radiation with age group ----
 plotDT <- results_beta_all
 setDT(plotDT)
 plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
@@ -91,22 +89,20 @@ pdf(paste0(dir_plot, "RRiqr_beta_age.pdf"), height = 3.5)
 plotbeta
 dev.off()
 
-# setDT(results_beta_all)
-# plotDT <- results_beta_all[mod == "Differences in differences", ]
-# plotDT
-# plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
-# DIDbeta <- ggplot(plotDT, aes(x = cause, y = RR)) +
-#   geom_linerange(aes(ymin = lowCI, ymax = highCI, shape = age_group, linetype = exposures), position = position_dodge(0.5), width = 0.5) +
-#   geom_point(size=2, aes(shape = age_group, linetype = exposures), position = position_dodge(0.5)) +
-#   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
-#   xlab("Death Cause") + ylab("Rate Ratio for an IQR increase \n with 95% Confidence Interval") +
-#   theme(legend.position="right") +
-#   labs(color = "Age groups") +
-#   labs(linetype = "Exposure sets") +
-#   guides(color=guide_legend(nrow=2, byrow=TRUE), linetype=guide_legend(nrow=2, byrow=TRUE), shape=guide_legend(nrow=2, byrow=TRUE)) +
-#   theme_minimal() +
-#   coord_flip()
-# DIDbeta
+## 2.2 beta radiation only all ages ----
+plotDT <- results_beta_all
+setDT(plotDT)
+plotDT <- plotDT[age_group=="18+",]
+plotbeta_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
+  geom_pointrange(size=0.3, aes(ymin = lowCI, ymax = highCI,linetype = exposures, color = mod), position = position_dodge(0.8)) +
+  geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
+  ylab("Rate ratio for an IQR increase\nwith 95% confidence interval") + xlab("Death cause") +
+  labs(color = "Models") +
+  labs(linetype = "Exposure sets") +
+  guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
+  scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "stroke" = "Stroke","TOT" = "Non-accidental\nall causes")) +
+  theme_minimal()
+plotbeta_main
 
 # 3. plot PM2.5 --------------
 dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"

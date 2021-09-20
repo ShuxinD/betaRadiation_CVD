@@ -1,11 +1,9 @@
-##################################################################
-# Project: beta radiation and CVD death in MA
-# Code: convert MA death record from one-row-per-person to one-row-per-zcta
-# Input: "ma_2000_2015.sas7bdat"
-# Output: "zcta_year.rds" as combination of zcta and year
-# Output: "MAdeath_count_ZIP_age'group'.rds"
-# Author: Shuxin Dong
-##################################################################
+#' Project: beta radiation and CVD death in MA
+#' Code: convert MA death record from one-row-per-person to one-row-per-zcta
+#' Input: "ma_2000_2015.sas7bdat"
+#' Output: "zcta_year.rds" as combination of zcta and year
+#' Output: "MAdeath_count_ZIP_age'group'.rds"
+#' Author: Shuxin Dong
 
 ## 0. set up --------------------------------------------------------------
 rm(list = ls())

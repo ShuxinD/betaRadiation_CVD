@@ -1,12 +1,10 @@
-###############################################################################
-# Project: beta radiation and CVD death in MA
-# Code: merge all datasets together for analyses
-# Input: all datasets
-# Output: "finalDT.rds"
-# Author: Shuxin Dong                                                         
-###############################################################################
-
-## 0. set up ------------------------------------------------------------------
+#' Project: beta radiation and CVD death in MA
+#' Code: merge all datasets together for analyses
+#' Input: all datasets
+#' Output: "finalDT.rds"
+#' Author: Shuxin Dong  
+                                                 
+## 0. set up -------------------------------------------------------------
 rm(list = ls())
 gc()
 
@@ -15,10 +13,10 @@ setwd("/media/qnap3/Shuxin/ParticalRadiation_MAdeath/")
 library(data.table)
 ## except for census data,data are all from Joel's server
 
-## 0. load zcta and year combination ------------------------------------------
+## 0. load zcta and year combination -------------------------------------
 zcta_year <- readRDS("zcta_year.rds")
 
-## 1.1 annual death on ZCTA ---------------------------------------------------
+## 1.1 annual death on ZCTA ---------------------------------------------
 ## 1.1.1 all age ---------
 dir_death_count <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/"
 count_month <- readRDS(paste0(dir_death_count, "MAdeath_count_ZIP_ageall.rds")) # this is by year and month

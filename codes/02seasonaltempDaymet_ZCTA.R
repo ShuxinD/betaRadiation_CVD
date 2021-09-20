@@ -1,10 +1,8 @@
-###############################################################################
-# Project: beta radiation and CVD death in MA
-# Code: convert daily temperature to seasonal average for each year
-# Input: Daymet daily temperature files on qnap4 prepared by Edgar
-# Output: seasonal_tmean_2001_2015.csv
-# Author: Shuxin Dong                                                         
-###############################################################################
+#' Project: beta radiation and CVD death in MA
+#' Code: convert daily temperature to seasonal average for each year
+#' Input: Daymet daily temperature files on qnap4 prepared by Edgar
+#' Output: seasonal_tmean_2001_2015.csv
+#' Author: Shuxin Dong                                                         
 
 ## 0. set up ------------------------------------------------------------------
 rm(list = ls())

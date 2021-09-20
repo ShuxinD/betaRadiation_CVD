@@ -1,13 +1,11 @@
-###############################################################################
-# Project: beta radiation and CVD death in MA
-# Code: Statistical Modelling
-# Input: "finalDT.rds"
-# Output: "/modresults_details/"
-# Output: "RRiqr_beta_beta.csv"
-# Output: "RRiqr_beta_betaPM.csv"
-# Output: "RRiqr_pm25_betaPM.csv"
-# Author: Shuxin Dong                                                         
-###############################################################################
+#' Project: beta radiation and CVD death in MA
+#' Code: Statistical Modelling
+#' Input: "finalDT.rds"
+#' Output: "/modresults_details/"
+#' Output: "RRiqr_beta_beta.csv"
+#' Output: "RRiqr_beta_betaPM.csv"
+#' Output: "RRiqr_pm25_betaPM.csv"
+#' Author: Shuxin Dong                                                         
 
 ## 0. set up ------------------------------------------------------------------
 rm(list = ls())
