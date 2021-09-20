@@ -1,10 +1,8 @@
-############################################################################
-# Project: beta radiation and CVD death in MA
-# Code: Output descriptive stats
-# Input: "finalDT.rds"
-# Output: "table1.doc" "corrTable.pdf"
-# Author: Shuxin Dong                                                       
-############################################################################
+#' Project: beta radiation and CVD death in MA
+#' Code: Output descriptive stats
+#' Input: "finalDT.rds"
+#' Output: "table1.doc" "corrTable.pdf"
+#' Author: Shuxin Dong                                                       
 
 ## 0. set up ---------------------------------------------------------------
 rm(list = ls())
@@ -23,6 +21,8 @@ dt <- readRDS("finalDT.rds")
 
 ## 1. table one  -----------------------------------------------------------
 summary(dt)
+length(unique(dt[,ZCTA5CE10]))
+
 listVars <- c("CVD", "MI", "stroke", "TOT",
               "CVD1865", "MI1865", "stroke1865", "TOT1865",
               "CVD6585", "MI6585", "stroke6585", "TOT6585",
@@ -38,12 +38,14 @@ addTable(rtffile, cbind(rownames(table1), table1))
 done(rtffile)
 
 dt[,`:=`(CHF=NULL,CHF1865=NULL,CHF6585=NULL,CHF85=NULL,
-         ZCTA5CE10=NULL,year=NULL)]
+         ZCTA5CE10=NULL)]
 dt[,`:=`(CVDrate=CVD/pcount,MIrate=MI/pcount,strokerate=stroke/pcount,TOTrate=TOT/pcount)][]
 summary <- rbind(dt[, lapply(.SD, mean)], dt[, lapply(.SD, sd)],
       dt[, lapply(.SD, quantile)])
 rownames(summary) <- c("mean", "sd", "quantile0", "quantile25", "quantile50","quantile75", "quantile1")
-write.csv(summary, paste0(dir_results, "tableone_value.csv"))
+write.csv(summary, paste0(dir_results, "tableone_spatial.csv"))
+
+dt[,.(CVD_mean=mean(CVD)), by=year]
 
 ## 2. correlation table ----------------------------------------------------
 M <- cor(na.omit(dt)[,.(Beta, pm25, summer_tmean, winter_tmean, medhouseholdincome, medianhousevalue, hispanic, pct_blk, poverty, education, popdensity, mean_bmi, smoke_rate)])
