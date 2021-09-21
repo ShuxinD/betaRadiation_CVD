@@ -19,6 +19,9 @@ library(corrplot)
 
 dt <- readRDS("finalDT.rds")
 
+IQR(dt$Beta)
+# 0.05530013
+
 ## 1. table one  -----------------------------------------------------------
 summary(dt)
 length(unique(dt[,ZCTA5CE10]))
@@ -67,8 +70,8 @@ p.mat <- cor.mtest(na.omit(dt)[,.(Beta, pm25, summer_tmean, winter_tmean, medhou
 colnames(M) <- c("Particle radiation", "PM[2.5]", "Summer average temperature", "Winter average temperature", "Median household income", "Median value of house", "Percentage of Hispanic", "Percentage of black", "Pencentage below poverty line", "Percentage without high school diploma", "Population density", "Mean BMI", "Smoking rate")
 rownames(M) <- c("Particle radiation", "PM[2.5]", "Summer average temperature", "Winter average temperature", "Median household income", "Median value of house", "Percentage of Hispanic", "Percentage of black", "Pencentage below poverty line", "Percentage without high school diploma", "Population density", "Mean BMI", "Smoking rate")
 par(mfrow=c(1,1))
-corrplot(M, method="number", type = "lower", p.mat = p.mat, sig.level = 0.01)
+corrplot(M, method="number", type = "lower", p.mat = p.mat, sig.level = 0.05)
 
 pdf(paste0(dir_results,"corrTable.pdf"), width = 10, height = 10)
-corrplot(M, method="number", type = "lower", p.mat = p.mat, sig.level = 0.01)
+corrplot(M, method="number", type = "lower", p.mat = p.mat, sig.level = 0.05)
 dev.off()

@@ -104,6 +104,10 @@ plotbeta_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
   theme_minimal()
 plotbeta_main
 
+pdf(paste0(dir_plot, "RRiqr_beta_main.pdf"), height = 3.5)
+plotbeta_main
+dev.off()
+
 # 3. plot PM2.5 --------------
 dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
 plotDT <- results_PM_all
