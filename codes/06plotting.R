@@ -70,6 +70,7 @@ write.csv(results_PM_all, paste0(dir_results.table, "results_PM_all_plot.csv"))
 ## 2. plot beta radiation -----------------------------------------------------
 dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
 ## 2.1 beta radiation with age group ----
+## all exposure sets
 plotDT <- results_beta_all
 setDT(plotDT)
 plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
@@ -89,6 +90,27 @@ pdf(paste0(dir_plot, "RRiqr_beta_age.pdf"), height = 3.5)
 plotbeta
 dev.off()
 
+## exposure set as beta+pm25
+plotDT <- results_beta_all
+setDT(plotDT)
+plotDT <- plotDT[exposures=="beta radiation + PM[2.5]"]
+plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
+plotbeta <- ggplot(plotDT, aes(x = cause, y = RR)) +
+  geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI, shape = age_group, color = mod), position = position_dodge(0.8)) +
+  geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
+  ylab("Rate ratio") + xlab("Death cause") +
+  labs(color = "Models") +
+  labs(shape = "Age groups") +
+  guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
+  scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "TOT" = "Non-accidental\n all causes")) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
+plotbeta
+
+pdf(paste0(dir_plot, "RRiqr_beta_age_betaPM.pdf"), height = 3.5)
+plotbeta
+dev.off()
+
 ## 2.2 beta radiation only all ages ----
 plotDT <- results_beta_all
 setDT(plotDT)
@@ -101,7 +123,8 @@ plotbeta_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
   labs(linetype = "Exposure sets") +
   guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
   scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "stroke" = "Stroke","TOT" = "Non-accidental\nall causes")) +
-  theme_minimal()
+  theme_minimal() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
 plotbeta_main
 
 pdf(paste0(dir_plot, "RRiqr_beta_main.pdf"), height = 3.5)
@@ -114,14 +137,15 @@ plotDT <- results_PM_all
 setDT(plotDT)
 plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
 plotpm <- ggplot(plotDT, aes(x = cause, y = RR)) +
-  geom_pointrange(size=0.3, aes(ymin = lowCI, ymax = highCI, shape = age_group, color = mod), position = position_dodge(0.8)) +
+  geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI, shape = age_group, color = mod), position = position_dodge(0.8)) +
   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
   ylab("Rate ratio for an IQR increase\nwith 95% confidence interval") + xlab("Death cause") +
   labs(color = "Models") +
   labs(shape = "Age groups") +
   guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
-  scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "TOT" = "All-causes")) +
-  theme_minimal()
+  scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "TOT" = "Non-accidental\n all causes")) +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
 plotpm
 
 pdf(paste0(dir_plot, "RRiqr_PM_age.pdf"), height = 3.5)
