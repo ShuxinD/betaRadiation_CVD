@@ -23,6 +23,11 @@ IQR(dt$Beta)
 # 0.05530013
 
 ## 1. table one  -----------------------------------------------------------
+sum(dt$TOT) # 716653
+sum(dt$CVD) # 186371, 0.2600575
+sum(dt$MI) # 36692, 0.05119912
+sum(dt$stroke) # 39069, 0.05451592
+
 summary(dt)
 length(unique(dt[,ZCTA5CE10]))
 
