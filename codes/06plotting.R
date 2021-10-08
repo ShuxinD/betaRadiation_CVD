@@ -94,9 +94,9 @@ plotDT <- results_beta_all
 setDT(plotDT)
 plotDT <- plotDT[age_group=="18+",]
 plotbeta_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
-  geom_pointrange(size=0.3, aes(ymin = lowCI, ymax = highCI,linetype = exposures, color = mod), position = position_dodge(0.8)) +
+  geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI,linetype = exposures, color = mod), position = position_dodge(0.8)) +
   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
-  ylab("Rate ratio for an IQR increase\nwith 95% confidence interval") + xlab("Death cause") +
+  ylab("Rate ratio") + xlab("Death cause") +
   labs(color = "Models") +
   labs(linetype = "Exposure sets") +
   guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
