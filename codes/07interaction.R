@@ -114,5 +114,34 @@ print(toxGLMM_tb)
 write.csv(toxGLMM_tb, paste0(dir_out_tb, "toxGLMM_X_tb.csv"))
 
 # 2. plots ----
+dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
+## prepare dataset
+toxDID_tb <- read.csv(paste0(dir_out_tb, "toxDID_X_tb.csv"))
+toxGLMM_tb <- read.csv(paste0(dir_out_tb, "toxGLMM_X_tb.csv"))
+plot_toxDID <- as.data.table(toxDID_tb)
+plot_toxDID[,`:=`(cause=X,
+                  beta_group=rep(c("beta25","beta50","beta75"), 4))]
+plot_toxGLMM <- as.data.table(toxGLMM_tb)
+plot_toxGLMM[,`:=`(cause=X,
+                   beta_group=rep(c("beta25","beta50","beta75"), 4))]
+plot_toxDID[,mod:="DID"]
+plot_toxGLMM[,mod:="GLMM"]
 
+## all models together
+plotDT <- rbind(plot_toxDID, plot_toxGLMM)
+plotDT[,beta_group:=as.factor(beta_group)]
 
+plotpm <- ggplot(plotDT, aes(x = cause, y = RR)) +
+  geom_pointrange(size=0.5, aes(ymin = RR_lci, ymax = RR_uci, color = beta_group, shape = mod), position = position_dodge(0.8)) + 
+  geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) + 
+  ylab("Rate ratio") + xlab("Death cause") +
+  labs(color = "Gross beta activity quartile", shape = "Model") + 
+  # guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
+  scale_x_discrete(labels=c("CVD" = "Cardiovascular\n disease", "MI" = "Myocardial\n infarction","stroke"="Stroke", "TOT" = "Non-accidental\nall-causes")) + 
+  scale_color_discrete(labels=c("1st quartile", "2nd quartile", "3rd quartile")) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
+plotpm
+  
+pdf(paste0(dir_plot, "PMxBeta_PM.pdf"), height = 3.5)
+plotpm
+dev.off()
