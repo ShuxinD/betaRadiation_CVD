@@ -9,7 +9,7 @@ rm(list = ls())
 gc()
 
 setwd("/media/qnap3/Shuxin/ParticalRadiation_MAdeath/")
-dir_results <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
+dir_results <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/descriptive/"
 
 library(data.table)
 library(ggplot2)
