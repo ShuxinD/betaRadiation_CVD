@@ -56,7 +56,7 @@ write.csv(summary, paste0(dir_results, "tableone_spatial.csv"))
 dt[,.(CVD_mean=mean(CVD)), by=year]
 
 ## 2. correlation table ----------------------------------------------------
-M <- cor(na.omit(dt)[,.(Beta, pm25, summer_tmean, winter_tmean, medhouseholdincome, medianhousevalue, hispanic, pct_blk, poverty, education, popdensity, mean_bmi, smoke_rate)])
+M <- cor(na.omit(dt)[,.(Beta, pm25, summer_tmean, winter_tmean, medhouseholdincome, medianhousevalue, hispanic, pct_blk, poverty, education, popdensity, mean_bmi, smoke_rate)], method = "spearman")
 cor.mtest <- function(mat, ...) {
   mat <- as.matrix(mat)
   n <- ncol(mat)
@@ -64,7 +64,7 @@ cor.mtest <- function(mat, ...) {
   diag(p.mat) <- 0
   for (i in 1:(n - 1)) {
     for (j in (i + 1):n) {
-      tmp <- cor.test(mat[, i], mat[, j], ...)
+      tmp <- cor.test(mat[, i], mat[, j], ..., method = "spearman",exact=FALSE)
       p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
     }
   }
@@ -75,8 +75,10 @@ p.mat <- cor.mtest(na.omit(dt)[,.(Beta, pm25, summer_tmean, winter_tmean, medhou
 colnames(M) <- c("Particle radiation", "PM[2.5]", "Summer average temperature", "Winter average temperature", "Median household income", "Median value of house", "Percentage of Hispanic", "Percentage of black", "Pencentage below poverty line", "Percentage without high school diploma", "Population density", "Mean BMI", "Smoking rate")
 rownames(M) <- c("Particle radiation", "PM[2.5]", "Summer average temperature", "Winter average temperature", "Median household income", "Median value of house", "Percentage of Hispanic", "Percentage of black", "Pencentage below poverty line", "Percentage without high school diploma", "Population density", "Mean BMI", "Smoking rate")
 par(mfrow=c(1,1))
+plot.new()
 corrplot(M, method="number", type = "lower", p.mat = p.mat, sig.level = 0.05)
+dev.off()
 
-pdf(paste0(dir_results,"corrTable.pdf"), width = 10, height = 10)
+pdf(paste0(dir_results,"corrTable_spearman.pdf"), width = 10, height = 10)
 corrplot(M, method="number", type = "lower", p.mat = p.mat, sig.level = 0.05)
 dev.off()
