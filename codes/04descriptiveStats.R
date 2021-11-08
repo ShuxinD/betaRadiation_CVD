@@ -49,8 +49,8 @@ dt[,`:=`(CHF=NULL,CHF1865=NULL,CHF6585=NULL,CHF85=NULL,
          ZCTA5CE10=NULL)]
 dt[,`:=`(CVDrate=CVD/pcount,MIrate=MI/pcount,strokerate=stroke/pcount,TOTrate=TOT/pcount)][]
 summary <- rbind(dt[, lapply(.SD, mean)], dt[, lapply(.SD, sd)],
-      dt[, lapply(.SD, quantile)])
-rownames(summary) <- c("mean", "sd", "quantile0", "quantile25", "quantile50","quantile75", "quantile1")
+      dt[, lapply(.SD, quantile, probs=c(0.1, 0.25, 0.5, 0.75, 0.9))])
+rownames(summary) <- c("mean", "sd", "10percentile", "25percentile", "50percentile","75percentile", "90percentile")
 write.csv(summary, paste0(dir_results, "tableone_spatial.csv"))
 
 dt[,.(CVD_mean=mean(CVD)), by=year]
