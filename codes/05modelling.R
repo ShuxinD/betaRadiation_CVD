@@ -2,6 +2,7 @@
 #' Code: Statistical Modelling
 #' Input: "finalDT.rds"
 #' Output: "/modresults_details/"
+#' Output: "RRiqr_pm25_PM.csv"
 #' Output: "RRiqr_beta_beta.csv"
 #' Output: "RRiqr_beta_betaPM.csv"
 #' Output: "RRiqr_pm25_betaPM.csv"
@@ -19,7 +20,7 @@ dt <- na.omit(dt)
 dt_pcount <- dt[,pcount]
 
 ## 1. models ------------------------------------------------------------------
-dir_modresults <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/modresults_details/"
+dir_modresults <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/details_modresults/"
 deathc <- c("TOT", "CVD", "MI", "stroke", 
             paste0(c("TOT", "CVD", "MI", "stroke"), 1865), 
             paste0(c("TOT", "CVD", "MI", "stroke"), 6585), 
@@ -46,6 +47,16 @@ for (deathc_i in deathc) {
   cat(paste0("finish mod0B ", deathc_i, "\n"))
 }
 
+## only PM ----
+for (deathc_i in deathc) {
+  mod <- gam(get(deathc_i) ~ pm25 + summer_tmean + winter_tmean + as.factor(year) + as.factor(ZCTA5CE10) + offset(log(dt_pcount)),
+             data = dt,
+             family = quasipoisson(link = "log"))
+  tb <- summary(mod)$p.table
+  write.table(tb, file = paste0(dir_modresults, "mod0PM_", deathc_i, ".csv"))
+  cat(paste0("finish mod0PM ", deathc_i, "\n"))
+}
+
 ## 1.2 mixed-effect model mod1 ------------------------------------------------
 ## beta and PM25 setA----
 for (deathc_i in deathc) {
@@ -69,8 +80,19 @@ for (deathc_i in deathc) {
   cat(paste0("finish mod1B ", deathc_i, "\n"))
 }
 
+## only PM ----
+for (deathc_i in deathc) {
+  mod <- gamm(get(deathc_i) ~ pm25 + summer_tmean + winter_tmean + medhouseholdincome + medianhousevalue + hispanic + pct_blk + poverty + education + popdensity + mean_bmi + smoke_rate + as.factor(year) + offset(log(dt_pcount)),
+              data = dt,
+              random = list(ZCTA5CE10=~1),
+              family = quasipoisson(link = "log"))
+  tb <- summary(mod$gam)$p.table
+  write.table(tb, file = paste0(dir_modresults, "mod1PM_", deathc_i, ".csv"))
+  cat(paste0("finish mod1PM ", deathc_i, "\n"))
+}
+
 ## 2. Results tables ----------------------------------------------------------
-dir_results.table <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/"
+dir_results.table <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/main_PRPM/supplements/"
 deathc <- c("TOT", "CVD", "MI", "stroke", 
             paste0(c("TOT", "CVD", "MI", "stroke"), 1865), 
             paste0(c("TOT", "CVD", "MI", "stroke"), 6585), 
@@ -182,3 +204,35 @@ print(results_B)
 
 write.table(results_B, file = paste0(dir_results.table, "RRiqr_beta_beta.csv"))
 # kable(results_B, caption = "Estimated RR for one IQR increase in beta radiation, with Exposure Set B (only radiation)")
+
+## only pm25: RR of pm25 for one IQR increase in two models ------
+## model 0PM
+RR0PM_tb <- NULL
+rownames_list <- NULL
+for (deathc_i in deathc) {
+  tb <- read.table(paste0(dir_modresults, "mod0PM_", deathc_i, ".csv"))
+  estimates <- exp(c(tb[2,1], tb[2,1]-1.96*tb[2,2], tb[2,1]+1.96*tb[2,2])*IQRs[,pm25])
+  RR0PM_tb <- rbind(RR0PM_tb, estimates)
+  rownames_list <- c(rownames_list, paste0(deathc_i, "age"))
+}
+rownames(RR0PM_tb) <- rownames_list
+colnames(RR0PM_tb) <- c("0PMRR", "0PMRR_lci", "0PMRR_uci")
+print(RR0PM_tb)
+
+## model 1B
+RR1PM_tb <- NULL
+rownames_list <- NULL
+for (deathc_i in deathc) {
+  tb <- read.table(paste0(dir_modresults, "mod1PM_", deathc_i, ".csv"))
+  estimates <- exp(c(tb[2,1], tb[2,1]-1.96*tb[2,2], tb[2,1]+1.96*tb[2,2])*IQRs[,pm25])
+  RR1PM_tb <- rbind(RR1PM_tb, estimates)
+  rownames_list <- c(rownames_list, paste0(deathc_i, "age"))
+}
+rownames(RR1PM_tb) <- rownames_list
+colnames(RR1PM_tb) <- c("1PMRR", "1PMRR_lci", "1PMRR_uci")
+print(RR1PM_tb)
+
+results_PM <- cbind(RR0PM_tb, RR1PM_tb)
+print(results_PM)
+
+write.table(results_PM, file = paste0(dir_results.table, "RRiqr_pm25_PM.csv"))
