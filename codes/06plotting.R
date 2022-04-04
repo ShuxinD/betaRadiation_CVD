@@ -13,6 +13,8 @@ gc()
 
 setwd("/media/qnap3/Shuxin/ParticalRadiation_MAdeath/")
 library(ggplot2)
+library(ggpubr)
+library(data.table)
 
 ## 1. prepare the dataset for plotting -----
 dir_results.table <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/main_PRPM/supplements/"
@@ -139,8 +141,8 @@ plotbeta_main
 dev.off()
 
 # 3. plot PM2.5 --------------
-dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/main_PRPM/"
-## 3.1 beta radiation with age group ----
+dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/main_PRPM/"
+## 3.1 pm25 with age group ----
 ## all exposure sets
 plotDT <- results_PM_all
 setDT(plotDT)
@@ -182,7 +184,7 @@ pdf(paste0(dir_plot, "RRiqr_pm_age_betaPM.pdf"), height = 3.5)
 plotpm
 dev.off()
 
-## 2.2 pm25 only all ages ----
+## 3.2 pm25 only all ages ----
 plotDT <- results_PM_all
 setDT(plotDT)
 plotDT <- plotDT[age_group=="18+",]
@@ -202,41 +204,14 @@ pdf(paste0(dir_plot, "RRiqr_pm_main.pdf"), height = 3.5)
 plotpm_main
 dev.off()
 
-# ## 3.1 with all ages ----
-# plotDT <- results_PM_all
-# setDT(plotDT)
-# plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
-# plotpm <- ggplot(plotDT, aes(x = cause, y = RR)) +
-#   geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI, shape = age_group, color = mod), position = position_dodge(0.8)) +
-#   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
-#   ylab("Rate ratio") + xlab("Death cause") +
-#   labs(color = "Models") +
-#   labs(shape = "Age groups") +
-#   guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
-#   scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "TOT" = "Non-accidental\n all causes")) +
-#   theme_minimal() +
-#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
-# plotpm
-# 
-# pdf(paste0(dir_plot, "RRiqr_PM_age.pdf"), height = 3.5)
-# plotpm
-# dev.off()
-# ## 3.2 only 18+ ----
-# plotDT <- results_PM_all
-# setDT(plotDT)
-# plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
-# plotDT <- plotDT[age_group=="18+"]
-# plotpm <- ggplot(plotDT, aes(x = cause, y = RR)) +
-#   geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI, color = mod), position = position_dodge(0.8)) +
-#   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
-#   ylab("Rate ratio") + xlab("Death cause") +
-#   labs(color = "Models") +
-#   guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
-#   scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "TOT" = "Non-accidental\n all causes")) +
-#   theme_minimal() +
-#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
-# plotpm
-# 
-# pdf(paste0(dir_plot, "RRiqr_PM_age18.pdf"), height = 3.5)
-# plotpm
-# dev.off()
+## 4. configure main figures for each pollutant together ----
+dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/main_PRPM/"
+figure <- ggarrange(plotbeta_main, plotpm_main,
+                    labels = c("A", "B"),
+                    ncol = 1, nrow = 2,
+                    common.legend = TRUE)
+figure
+
+pdf(paste0(dir_plot, "RRiqr_main_configured.pdf"), height = 8)
+figure
+dev.off()
