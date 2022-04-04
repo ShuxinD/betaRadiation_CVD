@@ -15,8 +15,8 @@ setwd("/media/qnap3/Shuxin/ParticalRadiation_MAdeath/")
 library(ggplot2)
 
 ## 1. prepare the dataset for plotting -----
-dir_results.table <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/main_PRPM/supplements/"
-dir_results.forplot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/main_PRPM/"
+dir_results.table <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/main_PRPM/supplements/"
+dir_results.forplot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/main_PRPM/"
 
 ## 1.1 beta radiation -------
 results_A <- read.table(file = paste0(dir_results.table, "RRiqr_beta_betaPM.csv"))
@@ -75,7 +75,7 @@ View(results_PM_all)
 write.csv(results_PM_all, paste0(dir_results.forplot, "results_PM_all_plot.csv"))
 
 ## 2. plot beta radiation -----------------------------------------------------
-dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/main_PRPM/"
+dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/main_PRPM/"
 ## 2.1 beta radiation with age group ----
 ## all exposure sets
 plotDT <- results_beta_all
