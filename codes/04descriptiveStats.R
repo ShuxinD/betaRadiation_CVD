@@ -9,7 +9,7 @@ rm(list = ls())
 gc()
 
 setwd("/media/qnap3/Shuxin/ParticalRadiation_MAdeath/")
-dir_results <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/descriptive/"
+dir_results <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/descriptive/"
 
 library(data.table)
 library(ggplot2)
@@ -45,13 +45,27 @@ addParagraph(rtffile, "Table")
 addTable(rtffile, cbind(rownames(table1), table1))
 done(rtffile)
 
-dt[,`:=`(CHF=NULL,CHF1865=NULL,CHF6585=NULL,CHF85=NULL,
-         ZCTA5CE10=NULL)]
-dt[,`:=`(CVDrate=CVD/pcount,MIrate=MI/pcount,strokerate=stroke/pcount,TOTrate=TOT/pcount)][]
-summary <- rbind(dt[, lapply(.SD, mean)], dt[, lapply(.SD, sd)],
+dt[,`:=`(CVDrate=CVD/pcount,MIrate=MI/pcount,strokerate=stroke/pcount,TOTrate=TOT/pcount)]
+dt[,`:=`(CHF=NULL,CHF1865=NULL,CHF6585=NULL,CHF85=NULL)][]
+dt_spatial <- dt[, lapply(.SD, mean), by = ZCTA5CE10][,`:=`(ZCTA5CE10=NULL)][]
+dt_temporal <- dt[,`:=`(ZCTA5CE10=NULL)][, lapply(.SD, mean), by = year][]
+
+summary_spatial <- rbind(dt_spatial[, lapply(.SD, mean)], dt_spatial[, lapply(.SD, sd)],
+                         dt_spatial[, lapply(.SD, quantile, probs=c(0.1, 0.25, 0.5, 0.75, 0.9))])
+summary_spatial
+rownames(summary_spatial) <- c("mean", "sd", "10percentile", "25percentile", "50percentile","75percentile", "90percentile")
+write.csv(summary_spatial, paste0(dir_results, "tableone_spatial.csv"))
+
+summary_temporal <- rbind(dt_temporal[, lapply(.SD, mean)], dt_temporal[, lapply(.SD, sd)],
+                          dt_temporal[, lapply(.SD, quantile, probs=c(0.1, 0.25, 0.5, 0.75, 0.9))])
+summary_temporal
+rownames(summary_temporal) <- c("mean", "sd", "10percentile", "25percentile", "50percentile","75percentile", "90percentile")
+write.csv(summary_temporal, paste0(dir_results, "tableone_temporal.csv"))
+
+summary_all <- rbind(dt[, lapply(.SD, mean)], dt[, lapply(.SD, sd)],
       dt[, lapply(.SD, quantile, probs=c(0.1, 0.25, 0.5, 0.75, 0.9))])
-rownames(summary) <- c("mean", "sd", "10percentile", "25percentile", "50percentile","75percentile", "90percentile")
-write.csv(summary, paste0(dir_results, "tableone_spatial.csv"))
+rownames(summary_all) <- c("mean", "sd", "10percentile", "25percentile", "50percentile","75percentile", "90percentile")
+write.csv(summary_all, paste0(dir_results, "tableone_spatial_temporal.csv"))
 
 dt[,.(CVD_mean=mean(CVD)), by=year]
 
