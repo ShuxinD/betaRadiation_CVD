@@ -39,7 +39,7 @@ results_beta_all <- data.frame(results_beta_all)
 View(results_beta_all)
 dim(results_beta_all)
 
-results_beta_all$mod <- rep(c(rep("Differences in differences", n_model), rep("Mixed-effect", n_model)),2)
+results_beta_all$mod <- rep(c(rep("Difference in differences", n_model), rep("Generalized linear mixed-effect model", n_model)),2)
 results_beta_all$cause <- rep(c("TOT", "CVD", "MI", "stroke"), dim(results_beta_all)[1]/4)
 results_beta_all$exposures <-  c(rep("beta radiation + PM[2.5]", n_model*2), rep("only beta radiation", n_model*2))
 results_beta_all$age_group <- rep(c(rep("18+", 4), rep("18-65", 4),rep("65-85", 4),rep("85+", 4)),2)
@@ -67,7 +67,7 @@ results_PM_all <- data.frame(results_PM_all)
 View(results_PM_all)
 dim(results_PM_all)
 
-results_PM_all$mod <- rep(c(rep("Differences in differences", n_model), rep("Mixed-effect", n_model)),2)
+results_PM_all$mod <- rep(c(rep("Difference in differences", n_model), rep("Generalized linear mixed-effect model", n_model)),2)
 results_PM_all$cause <- rep(c("TOT", "CVD", "MI", "stroke"), dim(results_PM_all)[1]/4)
 results_PM_all$exposures <-  c(rep("beta radiation + PM[2.5]", n_model*2), rep("only PM[2.5]", n_model*2))
 results_PM_all$age_group <- rep(c(rep("18+", 4), rep("18-65", 4),rep("65-85", 4),rep("85+", 4)),2)
@@ -205,10 +205,43 @@ plotpm_main
 dev.off()
 
 ## 4. configure main figures for each pollutant together ----
+plotDT <- results_beta_all
+setDT(plotDT)
+plotDT <- plotDT[age_group=="18+",]
+plotDT[exposures=="only beta radiation",]$exposures <- "only beta radiation / PM[2.5]"
+plotbeta_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
+  geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI, linetype = exposures, color = mod), position = position_dodge(0.8)) +
+  geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
+  ylab("Rate ratio") + xlab("Death cause") +
+  labs(color = "Models", linetype = "Exposure sets") +
+  guides(color = guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), 
+         linetype = guide_legend(nrow=2, override.aes=list(shape=c(NA,NA)))) +
+  scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "stroke" = "Stroke","TOT" = "Non-accidental\nall causes")) +
+  theme_minimal() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
+plotbeta_main
+
+plotDT <- results_PM_all
+setDT(plotDT)
+plotDT <- plotDT[age_group=="18+",]
+plotDT[exposures=="only PM[2.5]",]$exposures <- "only beta radiation / PM[2.5]"
+plotpm_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
+  geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI,linetype = exposures, color = mod), position = position_dodge(0.8)) +
+  geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
+  ylab("Rate ratio") + xlab("Death cause") +
+  labs(color = "Models",linetype = "Exposure sets") +
+  guides(color = guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), 
+         linetype = guide_legend(nrow=2, override.aes=list(shape=c(NA,NA)))) +
+  scale_x_discrete(labels=c("CVD" = "Cardiovascular\ndisease", "MI" = "Myocardial\ninfarction", "stroke" = "Stroke","TOT" = "Non-accidental\nall causes")) +
+  theme_minimal() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
+plotpm_main
+
 dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/main_PRPM/"
 figure <- ggarrange(plotbeta_main, plotpm_main,
                     labels = c("A", "B"),
                     ncol = 1, nrow = 2,
+                    legend = "top",
                     common.legend = TRUE)
 figure
 
