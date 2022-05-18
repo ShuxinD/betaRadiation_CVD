@@ -95,7 +95,7 @@ plotbeta <- ggplot(plotDT, aes(x = cause, y = RR)) +
   theme_minimal()
 plotbeta
 
-pdf(paste0(dir_plot, "RRiqr_beta_age.pdf"), height = 3.5)
+cairo_pdf(paste0(dir_plot, "RRiqr_beta_age.pdf"), height = 3.5)
 plotbeta
 dev.off()
 
@@ -116,7 +116,7 @@ plotbeta <- ggplot(plotDT, aes(x = cause, y = RR)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
 plotbeta
 
-pdf(paste0(dir_plot, "RRiqr_beta_age_betaPM.pdf"), height = 3.5)
+cairo_pdf(paste0(dir_plot, "RRiqr_beta_age_betaPM.pdf"), height = 3.5)
 plotbeta
 dev.off()
 
@@ -136,7 +136,7 @@ plotbeta_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
 plotbeta_main
 
-pdf(paste0(dir_plot, "RRiqr_beta_main.pdf"), height = 3.5)
+cairo_pdf(paste0(dir_plot, "RRiqr_beta_main.pdf"), height = 3.5)
 plotbeta_main
 dev.off()
 
@@ -159,7 +159,7 @@ plotpm <- ggplot(plotDT, aes(x = cause, y = RR)) +
   theme_minimal()
 plotpm
 
-pdf(paste0(dir_plot, "RRiqr_pm_age.pdf"), height = 3.5)
+cairo_pdf(paste0(dir_plot, "RRiqr_pm_age.pdf"), height = 3.5)
 plotpm
 dev.off()
 
@@ -180,7 +180,7 @@ plotpm <- ggplot(plotDT, aes(x = cause, y = RR)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
 plotpm
 
-pdf(paste0(dir_plot, "RRiqr_pm_age_betaPM.pdf"), height = 3.5)
+cairo_pdf(paste0(dir_plot, "RRiqr_pm_age_betaPM.pdf"), height = 3.5)
 plotpm
 dev.off()
 
@@ -200,7 +200,7 @@ plotpm_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
 plotpm_main
 
-pdf(paste0(dir_plot, "RRiqr_pm_main.pdf"), height = 3.5)
+cairo_pdf(paste0(dir_plot, "RRiqr_pm_main.pdf"), height = 3.5)
 plotpm_main
 dev.off()
 
@@ -245,6 +245,6 @@ figure <- ggarrange(plotbeta_main, plotpm_main,
                     common.legend = TRUE)
 figure
 
-pdf(paste0(dir_plot, "RRiqr_main_configured.pdf"), height = 8)
+cairo_pdf(paste0(dir_plot, "RRiqr_main_configured.pdf"), height = 8)
 figure
 dev.off()
