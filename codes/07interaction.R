@@ -173,7 +173,7 @@ plotsave <- ggplot(plotDT_save, aes(x = cause, y = RR)) +
          shape = guide_legend(nrow=3, override.aes=list(linetype=c(0,0,0)))) +
   scale_x_discrete(labels=c("CVD" = "Cardiovascular\n disease", "MI" = "Myocardial\n infarction","stroke"="Stroke", "TOT" = "Non-accidental\nall-causes")) + 
   scale_shape_discrete(labels=c("10th percentile","median", "90th percentile")) + 
-  scale_color_discrete(labels=c("Difference in differences","Generalized linear mixed-effect model")) + 
+  scale_color_discrete(labels=c("Difference in differences","Generalized linear mixed model")) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1), legend.position="top")
 plotsave
   

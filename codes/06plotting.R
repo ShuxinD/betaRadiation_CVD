@@ -36,15 +36,15 @@ n_model <- length(RR_A)/2
 results_beta_all <- rbind(cbind(RR_A, lowCI_A, highCI_A), cbind(RR_B, lowCI_B, highCI_B))
 print(results_beta_all)
 results_beta_all <- data.frame(results_beta_all)
-View(results_beta_all)
+# View(results_beta_all)
 dim(results_beta_all)
 
-results_beta_all$mod <- rep(c(rep("Difference in differences", n_model), rep("Generalized linear mixed-effect model", n_model)),2)
+results_beta_all$mod <- rep(c(rep("Difference in differences", n_model), rep("Generalized linear mixed model", n_model)),2)
 results_beta_all$cause <- rep(c("TOT", "CVD", "MI", "stroke"), dim(results_beta_all)[1]/4)
-results_beta_all$exposures <-  c(rep("beta radiation + PM[2.5]", n_model*2), rep("only beta radiation", n_model*2))
+results_beta_all$exposures <-  c(rep("gross beta-activity + PM[2.5]", n_model*2), rep("only gross beta-activity", n_model*2))
 results_beta_all$age_group <- rep(c(rep("18+", 4), rep("18-65", 4),rep("65-85", 4),rep("85+", 4)),2)
 colnames(results_beta_all) <- c("RR", "lowCI", "highCI", "mod", "cause", "exposures", "age_group")
-View(results_beta_all)
+# View(results_beta_all)
 
 write.csv(results_beta_all, paste0(dir_results.forplot, "results_beta_all_plot.csv"))
 
@@ -64,15 +64,15 @@ n_model <- length(RR_A)/2
 results_PM_all <- rbind(cbind(RR_A, lowCI_A, highCI_A), cbind(RR_B, lowCI_B, highCI_B))
 print(results_PM_all)
 results_PM_all <- data.frame(results_PM_all)
-View(results_PM_all)
+# View(results_PM_all)
 dim(results_PM_all)
 
-results_PM_all$mod <- rep(c(rep("Difference in differences", n_model), rep("Generalized linear mixed-effect model", n_model)),2)
+results_PM_all$mod <- rep(c(rep("Difference in differences", n_model), rep("Generalized linear mixed model", n_model)),2)
 results_PM_all$cause <- rep(c("TOT", "CVD", "MI", "stroke"), dim(results_PM_all)[1]/4)
-results_PM_all$exposures <-  c(rep("beta radiation + PM[2.5]", n_model*2), rep("only PM[2.5]", n_model*2))
+results_PM_all$exposures <-  c(rep("gross beta-activity + PM[2.5]", n_model*2), rep("only PM[2.5]", n_model*2))
 results_PM_all$age_group <- rep(c(rep("18+", 4), rep("18-65", 4),rep("65-85", 4),rep("85+", 4)),2)
 colnames(results_PM_all) <- c("RR", "lowCI", "highCI", "mod", "cause", "exposures", "age_group")
-View(results_PM_all)
+# View(results_PM_all)
 
 write.csv(results_PM_all, paste0(dir_results.forplot, "results_PM_all_plot.csv"))
 
@@ -102,7 +102,7 @@ dev.off()
 ## exposure set as beta+pm25
 plotDT <- results_beta_all
 setDT(plotDT)
-plotDT <- plotDT[exposures=="beta radiation + PM[2.5]"]
+plotDT <- plotDT[exposures=="gross beta-activity + PM[2.5]"]
 plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
 plotbeta <- ggplot(plotDT, aes(x = cause, y = RR)) +
   geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI, shape = age_group, color = mod), position = position_dodge(0.8)) +
@@ -166,7 +166,7 @@ dev.off()
 ## exposure set as beta+pm25
 plotDT <- results_PM_all
 setDT(plotDT)
-plotDT <- plotDT[exposures=="beta radiation + PM[2.5]"]
+plotDT <- plotDT[exposures=="gross beta-activity + PM[2.5]"]
 plotDT[, age_group:= factor(age_group, levels = c("18+", "18-65","65-85", "85+"))]
 plotpm <- ggplot(plotDT, aes(x = cause, y = RR)) +
   geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI, shape = age_group, color = mod), position = position_dodge(0.8)) +
@@ -208,8 +208,8 @@ dev.off()
 plotDT <- results_beta_all
 setDT(plotDT)
 plotDT <- plotDT[age_group=="18+",]
-plotDT[exposures=="only beta radiation",]$exposures <- "only gross \u03B2-activity / PM[2.5]"
-plotDT[exposures=="beta radiation + PM[2.5]",]$exposures <- "gross \u03B2-activity + PM[2.5]"
+plotDT[exposures=="only gross beta-activity",]$exposures <- "only gross \u03B2-activity / PM[2.5]"
+plotDT[exposures=="gross beta-activity + PM[2.5]",]$exposures <- "gross \u03B2-activity + PM[2.5]"
 plotbeta_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
   geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI, linetype = exposures, color = mod), position = position_dodge(0.8)) +
   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
@@ -226,7 +226,7 @@ plotDT <- results_PM_all
 setDT(plotDT)
 plotDT <- plotDT[age_group=="18+",]
 plotDT[exposures=="only PM[2.5]",]$exposures <- "only gross \u03B2-activity / PM[2.5]"
-plotDT[exposures=="beta radiation + PM[2.5]",]$exposures <- "gross \u03B2-activity + PM[2.5]"
+plotDT[exposures=="gross beta-activity + PM[2.5]",]$exposures <- "gross \u03B2-activity + PM[2.5]"
 plotpm_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
   geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI,linetype = exposures, color = mod), position = position_dodge(0.8)) +
   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
