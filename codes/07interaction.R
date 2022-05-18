@@ -1,9 +1,8 @@
 #' Project: beta radiation and CVD death in MA
 #' Code: interaction analysis
-#' Input: 
+#' Input: ...
 #' Output: ...
 #' Author: Shuxin Dong
-
 
 # 0. setup------
 rm(list=ls())
@@ -14,8 +13,8 @@ library(data.table)
 library(ggplot2)
 
 dir_in <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/"
-dir_out_detail <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/details_interactionmodresults/"
-dir_out_tb <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/main_interactions/"
+dir_out_detail <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/details_interactionmodresults/"
+dir_out_tb <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/main_interactions/"
 
 dt <- readRDS(paste0(dir_in, "finalDT.rds"))
 dt <- na.omit(dt)
@@ -130,7 +129,7 @@ print(toxGLMM_tb)
 write.csv(toxGLMM_tb, paste0(dir_out_tb, "toxGLMM_X_tb.csv"))
 
 # 2. plots ----
-dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/betaRadiation_CVD/results/main_interactions/"
+dir_plot <- "/media/qnap3/Shuxin/ParticalRadiation_MAdeath/github_repo/results/main_interactions/"
 ## prepare dataset
 toxDID_tb <- read.csv(paste0(dir_out_tb, "toxDID_X_tb.csv"))
 toxGLMM_tb <- read.csv(paste0(dir_out_tb, "toxGLMM_X_tb.csv"))
@@ -148,28 +147,36 @@ plotDT <- rbind(plot_toxDID, plot_toxGLMM)
 plotDT[,beta_group:=as.factor(beta_group)]
 
 plotpm <- ggplot(plotDT, aes(x = cause, y = RR)) +
-  geom_pointrange(size=0.5, aes(ymin = RR_lci, ymax = RR_uci, color = beta_group, shape = mod), position = position_dodge(0.8)) + 
+  geom_pointrange(size=0.5, aes(ymin = RR_lci, ymax = RR_uci, shape = beta_group, color = mod), position = position_dodge(0.8)) + 
   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) + 
   ylab("Rate ratio") + xlab("Death cause") +
-  labs(color = "Gross beta activity quartile", shape = "Model") + 
-  # guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
+  labs(color = "Models", shape = "Gross \u03B2-activity quantiles") + 
+  guides(color = guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), 
+         shape = guide_legend(nrow=5, override.aes=list(linetype=c(0,0,0,0,0)))) +
   scale_x_discrete(labels=c("CVD" = "Cardiovascular\n disease", "MI" = "Myocardial\n infarction","stroke"="Stroke", "TOT" = "Non-accidental\nall-causes")) + 
-  scale_color_discrete(labels=c("10th percentile","1st quartile", "2nd quartile", "3rd quartile", "90th percentile")) + 
+  scale_shape_discrete(labels=c("10th percentile","1st quartile", "2nd quartile", "3rd quartile", "90th percentile")) + 
+  scale_color_discrete(labels=c("Difference in differences","Generalized linear mixed-effect model")) + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
 plotpm
 
+cairo_pdf(paste0(dir_plot, "PMxBeta_PM_all.pdf"), height = 5)
+plotpm
+dev.off()
+
 plotDT_save <- plotDT[beta_group=="beta10"|beta_group=="beta50"|beta_group=="beta90",]
 plotsave <- ggplot(plotDT_save, aes(x = cause, y = RR)) +
-  geom_pointrange(size=0.5, aes(ymin = RR_lci, ymax = RR_uci, color = beta_group, shape = mod), position = position_dodge(0.8)) + 
+  geom_pointrange(size=0.5, aes(ymin = RR_lci, ymax = RR_uci, shape = beta_group, color = mod), position = position_dodge(0.8)) + 
   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) + 
   ylab("Rate ratio") + xlab("Death cause") +
-  labs(color = "Gross beta activity quartile", shape = "Model") + 
-  # guides(color=guide_legend(nrow=2, override.aes=list(shape=c(NA,NA))), shape=guide_legend(nrow=2, override.aes=list(linetype=c(0,0)))) +
+  labs(color = "Models", shape = "Gross \u03B2-activity quantiles") + 
+  guides(color = guide_legend(nrow=3, override.aes=list(shape=c(NA,NA))), 
+         shape = guide_legend(nrow=3, override.aes=list(linetype=c(0,0,0)))) +
   scale_x_discrete(labels=c("CVD" = "Cardiovascular\n disease", "MI" = "Myocardial\n infarction","stroke"="Stroke", "TOT" = "Non-accidental\nall-causes")) + 
-  scale_color_discrete(labels=c("10th percentile", "median", "90th percentile")) + 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1))
+  scale_shape_discrete(labels=c("10th percentile","median", "90th percentile")) + 
+  scale_color_discrete(labels=c("Difference in differences","Generalized linear mixed-effect model")) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), axis.line = element_line(colour = "black"), panel.border = element_rect(colour = "black", fill=NA, size=1), legend.position="top")
 plotsave
   
-pdf(paste0(dir_plot, "PMxBeta_PM_105090.pdf"), height = 3.5)
+cairo_pdf(paste0(dir_plot, "PMxBeta_PM.pdf"), height = 5)
 plotsave
 dev.off()
