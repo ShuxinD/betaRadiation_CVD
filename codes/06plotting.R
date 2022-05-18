@@ -208,7 +208,7 @@ dev.off()
 plotDT <- results_beta_all
 setDT(plotDT)
 plotDT <- plotDT[age_group=="18+",]
-plotDT[exposures=="only beta radiation",]$exposures <- "only beta radiation / PM[2.5]"
+plotDT[exposures=="only beta radiation",]$exposures <- "only gross \u03B2-activity / PM[2.5]"
 plotbeta_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
   geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI, linetype = exposures, color = mod), position = position_dodge(0.8)) +
   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
@@ -224,7 +224,7 @@ plotbeta_main
 plotDT <- results_PM_all
 setDT(plotDT)
 plotDT <- plotDT[age_group=="18+",]
-plotDT[exposures=="only PM[2.5]",]$exposures <- "only beta radiation / PM[2.5]"
+plotDT[exposures=="only PM[2.5]",]$exposures <- "only gross \u03B2-activity / PM[2.5]"
 plotpm_main <- ggplot(plotDT, aes(x = cause, y = RR)) +
   geom_pointrange(size=0.5, aes(ymin = lowCI, ymax = highCI,linetype = exposures, color = mod), position = position_dodge(0.8)) +
   geom_hline(yintercept = 1, linetype="dashed", color = 1, size = 0.2) +
